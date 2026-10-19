@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Throttling</h1>
+        
+        <script>
+
+var expensive = ()=>{
+    console.log("resized")
+}
+
+var throttle = (fn, d)=>{
+    let flag = true;
+    return function(){
+        if(flag){
+            fn();
+            flag = false;
+            setTimeout(()=>{
+                flag= true;
+            },d)
+        }
+
+    }
+}
+var betterExpensive = throttle(expensive, 1000);
+
+window.addEventListener("resize", betterExpensive)
+
+        </script>
+    </body>
+</html>

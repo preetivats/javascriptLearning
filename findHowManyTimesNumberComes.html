@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Find Repeating numbers</h1>
+        <script>
+
+let arr = [2,3,4,1,1,2,3,4,5, 6, 6, 6];
+function findRepeatingNumbers(arr) {
+
+let repeatingNumbers = arr.reduce((acc,curr)=> {
+acc[curr] = acc[curr] ? acc[curr] + 1 : 1
+
+return acc
+},{})
+
+
+        // Write a function that returns the number which comes maximum times.
+let maxCount = 0;
+let maxNumber = null;
+
+
+for(let number in repeatingNumbers){
+    if(repeatingNumbers[number] > maxCount){
+        maxCount = repeatingNumbers[number];
+        maxNumber = number
+
+    }
+
+}
+
+        console.log('repeatingNumbers',repeatingNumbers)
+console.log('maxNumber',maxNumber)
+}
+
+
+findRepeatingNumbers(arr);
+</script>
+    </body>
+</html>

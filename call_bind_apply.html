@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Call, Bind, Apply</h1>
+<button id="clickme">Click Me With Bind</button>
+<button id="clickme1">Click Me With Arrow function</button>
+
+        <script>
+var name= "Gourav";
+// Arrow Function
+let arrow = {
+    name: "Preeti",
+    greet:()=>{
+        console.log("Hello ", arrow.name)
+    } 
+}
+
+arrow.greet();
+
+// Simple Function
+let normal = {
+    name: "Gourav",
+    greet:function(){
+        console.log("Hello ", this.name)
+    } 
+}
+
+normal.greet();
+
+// Call Function
+let call = {
+    name: "Gourav",
+    greet:function(other){
+        console.log(`Hello, ${this.name}. ${this.greet} ${other}` )
+    } 
+}
+
+let call1 = {name: "Radha", greet: "How r u?"}
+let call2 = {name: "Preeti", greet: "Whats going on"}
+call.greet.apply(call1, ["All well"]);
+call.greet.call(call2, "All good there");
+
+let call3 = {name: "Gourav", greet: 'hi'}
+
+let bind = call.greet.bind(call3)
+
+bind("Hello");
+
+let counter = {
+    name: "Preeti",
+    count: 0,
+    increment: function(){
+        this.count++;
+        console.log("count", this.count, this.name)
+    },
+     decrement: function(){
+        this.count--;
+        console.log("count", this.count, this.name)
+    },
+
+    hello: function(){
+        setTimeout(function(){
+            console.log('name in settitmeout', this.name)
+        },1000)
+    }
+}
+
+let btn = document.getElementById("clickme");
+let btn1 = document.getElementById("clickme1");
+
+let handler = counter.increment.bind(counter, "Gourav")
+btn.addEventListener("click", handler)
+
+btn1.addEventListener("click", ()=>{counter.decrement()})
+
+counter.hello();
+
+
+function forLoop(){
+    for(let i = 1; i <= 3; i++){
+        setTimeout( function(){
+            console.log("i", i)
+        },i * 1000)
+    }
+}
+
+forLoop();
+</script>
+    </body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Curring in JS</h1>
+        <p>To implement currying in JavaScript, you transform a function that accepts multiple arguments into a nested series of functions that each take a single argument.</p>
+        <script>
+// simple currying example
+let multiply = function(a){
+    return function(b){
+        return function(c){
+        return a*b * c
+
+        }
+    }
+}
+console.log(multiply(2)(3)(4))
+
+// currying using Arrow function example
+let arrowMultiply = (a)=>(b)=>(c)=> a*b * c;
+
+
+console.log(arrowMultiply(2)(3)(5))
+
+
+// When we dont know the number of arguments but have a ending point
+let newMultiply = (a)=>(b)=>{
+        return b ? newMultiply(a*b) : a;
+}
+
+console.log(newMultiply(2)(3)(5)(6)())
+
+// When we dont know the number of arguments and we can pass arguments in any order and dont want to call the function multiple times
+// with termination condition
+function recursiveCurry(fn) {
+  return function curried(...args) {
+    // This inner function handles the next incoming chunk of arguments
+    return function(...nextArgs) {
+      // Base Case: If called with empty parentheses (), stop recursion and run the math
+      if (nextArgs.length === 0) {
+        return fn.apply(this, args);
+      }
+      
+      // Recursive Step: Call 'curried' again with the combined arguments
+      return curried.apply(this, [...args, ...nextArgs]);
+    };
+  };
+}
+
+let totalSum = (...numbers)=>{
+    return numbers.reduce((acc,curr)=>acc+curr,0)
+}
+
+let curriedSum = recursiveCurry(totalSum);
+console.log(curriedSum(2, 3, 5, 6)(7,8)())
+
+// Infinite currying without termination condition
+function infiniteCurry(fn) {
+  return function curried(...args) {
+    // 1. Always create and return a new tracking function to keep the chain open
+    const nextCall = function(...nextArgs) {
+      return curried.apply(this, [...args, ...nextArgs]);
+    };
+
+    console.log("args:", args);
+    // 2. Intercept primitive conversions (like when adding or printing)
+    nextCall[Symbol.toPrimitive] = function(hint) {
+      return fn.apply(this, args);
+    };
+
+    // For older environments, also override valueOf and toString
+    nextCall.valueOf = () => fn.apply(this, args);
+    nextCall.toString = () => String(fn.apply(this, args));
+
+    return nextCall;
+  };
+}
+
+let infiniteSum = infiniteCurry(totalSum);
+console.log(infiniteSum(2, 3, 5, 6)(7,8))
+
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Async / Await</h1>
+        <script>
+                
+console.log("1. Hello Start Program");
+
+let pr1 = new Promise(function(resolve,reject){
+    console.log('pr 1');
+    setTimeout(()=>{
+        resolve("2. Promise Resolved")
+    },1000)
+    console.log("pr 1 ends")
+})
+
+let pr2 = new Promise((resolve,reject)=>{
+    console.log("pr 2")
+    setTimeout(()=>{
+        reject("3. Promise Rejected")
+    },5000)
+    console.log("pr 2 ends")
+})
+
+async function handlePromise(){
+    console.log("3. Function Starts");
+let p1 = await pr1;
+console.log(p1)
+// let p2 = await pr2;
+// console.log(p2);
+console.log('4. Function Ends')
+
+try{
+const [parllelPr1, parllelPr2] = await Promise.allSettled([pr1, pr2]);
+console.log('parllelPr1',parllelPr1);
+console.log("parllelPr2",parllelPr2)
+}catch(error){
+    console.log("error",error)
+}
+
+
+}
+console.log('Before function call')
+handlePromise();
+console.log("6. End Program")
+
+
+
+
+        </script>
+    </body>
+</html>

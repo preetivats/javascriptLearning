@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Closures</h1>
+        <code><pre>
+function createCounter() {
+  let count = 0; 
+  return function() { 
+    count++; 
+    return count; 
+  };
+}
+
+const counterA = createCounter(); // First instance
+const counterB = createCounter(); // Second instance
+    </pre>
+        </code>
+        <script>
+
+// A global variable that stays in memory for the life of the application
+let globalHolder = null;
+
+function runLeakyCode() {
+  // 1. A massive array is created on every function call (approx. 8MB)
+  let massiveData = new Array(1000000).fill("⚠️");
+
+  // 2. An old reference is captured here
+  let priorHolder = globalHolder;
+
+  // 3. Unused Closure: It references 'massiveData' and 'priorHolder'
+  let unusedClosure = function () {
+    if (priorHolder) {
+      console.log("Checking prior holder...");
+    }
+    return massiveData; 
+  };
+
+  // 4. Leaking Closure: This is assigned to the global scope.
+  // Even though it NEVER uses 'massiveData', it shares the exact same 
+  // parent lexical environment as 'unusedClosure'.
+  globalHolder = function () {
+    return "I am just a simple string.";
+  };
+}
+
+// Simulate a user interacting or a recurring interval
+// setInterval(() => {
+//   runLeakyCode();
+//   console.log("Executed runLeakyCode(). Memory is climbing...");
+// }, 200);
+
+        </script>
+    </body>
+</html>

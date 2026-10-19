@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Polyfills</h1>
+        <script>
+
+// Filter Polyfill
+Array.prototype.myFilter = function(cond){
+        let context = this;
+let arr1 = [];
+for(let i = 0; i < context.length; i++){
+        if(cond(context[i])){
+                arr1.push(context[i])
+        }
+}
+
+return arr1;
+}
+let arr = [1,6,3,4,5];
+console.log('filter',arr.myFilter(r=> r>4))
+
+// Map polyfill
+Array.prototype.myMap = function(callback){
+let array = [];
+for(let i=0;i<this.length;i++){
+        array.push(callback(this[i]))
+}
+return array;
+}
+
+console.log('map',arr.myMap(r=>r*2));
+
+
+// Polyfill for Bind
+
+Function.prototype.myBind = function(context, args){
+        let targetThis = this;
+        return function(){
+               return targetThis.call(context, args)
+        }
+}
+
+function sayHello(args){
+        console.log(this.name + " has " + args)
+}
+let obj={
+        name: "Preeti"
+}
+let bind = sayHello.myBind(obj, "JS")
+
+
+bind();
+
+
+
+Array.prototype.myReduce = function(callback, initialValue){
+        let acc = initialValue;
+
+        for(let i=0; i<this.length; i++){
+                acc = callback(acc, this[i])
+        }
+
+        return acc;
+}
+let arr2 = [1,2,3];
+let sum = arr2.myReduce((acc,curr)=>acc+curr, 0)
+
+console.log('reduce',sum, arr2)
+</script>
+    </body>
+</html>

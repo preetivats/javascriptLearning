@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Prototype</h1>
+        <script>
+
+// Object Prototype
+
+let obj = {
+        name: "Preeti"
+}
+
+let obj1 = {
+        name: "Gourav"
+}
+
+Object.prototype.greet = function(lastName){
+    console.log("Hello from prototype", this.name + " " + lastName);
+}
+
+obj.greet("Vats");
+obj1.greet("Sharma");
+console.log("Object:", typeof obj, obj.__proto__ );
+
+
+// Class Prototype
+
+class Person{
+        constructor(name){
+                this.name = name;
+        }
+
+        sirname(lastName){
+                console.log("Hello from class", this.name + " " + lastName);
+        }
+}
+
+let person = new Person("Radha");
+person.sirname("Rani");
+console.log("Person:", typeof Person, Person.prototype);
+
+// Function Prototype
+
+function Car(name){
+this.name = name;
+}
+Car.prototype.drive = function(){
+        console.log("Car drive:", this.name + " .... VROOM");
+}
+
+let car = new Car("BMW");
+car.drive();
+
+function ElectricCar(name){
+        Car.call(this, name);
+}
+
+ElectricCar.prototype = Object.create(Car.prototype);
+ElectricCar.prototype.constructor = ElectricCar;
+ElectricCar.prototype.drive = function(){
+        //Car.prototype.drive.call(this);
+        console.log("Electric Car drive:", this.name + " .... ZOOM");
+}
+let electricCar = new ElectricCar("Tesla");
+electricCar.drive();
+</script>
+    </body>
+</html>

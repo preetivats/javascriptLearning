@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Deep Copy</h1>
+
+        <script>
+let original = {
+    name: "Preeti",
+    greet: function(){
+        let v= "abc";
+        return 'hello  ' + this.name ;
+    },
+    date: new Date(),
+    place:{
+        address: "Delhi"
+    },
+    hobby: ['js','react']
+
+}
+
+function deepCopy(obj){
+    if(obj === null || typeof obj != 'object'){
+        return obj
+    }
+
+     // 2. BASE CASE: If it's a Date object, create a fresh copy
+    if (obj instanceof Date) {
+        return new Date(obj.getTime());
+    }
+
+    let cloned = Array.isArray(obj) ? [] : {};
+
+
+//    let cloned = {};
+    for(let key in obj){
+        if(obj.hasOwnProperty(key)){
+        // console.log(key)
+
+        cloned[key] = deepCopy(obj[key])
+        }
+    }
+
+    return cloned ;
+
+}
+
+
+console.log("original greet", original.greet());
+
+let cloned =deepCopy(original)
+// cloned.place.address = "Haryana"
+// console.log("cloned", cloned)
+// console.log("cloned", original)
+
+// let original3 = {...original}
+// original3.name = "punjab"
+
+// console.log("original3",original3)
+cloned.name = "Gourav";
+console.log("original", original)
+console.log("cloned", cloned.date.setFullYear(2020))
+console.log("cloned get year", cloned.date.getFullYear())
+console.log("original get year", original.date.getFullYear())
+console.log("cloned greet", cloned.greet())
+
+
+</script>
+    </body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Find Unique ID</h1>
+        
+        <script>
+        let obj = [
+            {id:1, name:"Pree"},
+            {id:2, name:"Gourav"},
+            {id:1, name:"Radha"},
+            {id:3, name:"Pardeep"}
+        ]
+    findUniqueDetails(obj);
+        function findUniqueDetails(obj){
+            let unique = obj.reduce((acc,curr)=>{
+                let id = curr.id;
+
+                if(!acc[id]){
+                    acc[id] = curr;
+                }
+
+                return acc;
+            },{})
+
+            console.log(Object.values(unique))
+
+        }
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    </head>
+    <body>
+        <h1>Inheritance & Polymorphism in Class</h1>
+        <script>
+
+class Person{
+        constructor(name){
+                this.name = name;
+        }
+
+        sirname(lastName){
+                console.log("Hello from class", this.name + " " + lastName);
+        }
+
+        state(stateName){
+                console.log("Hello from class", this.name + " is from a state." + stateName);
+        }
+}
+
+class Employee extends Person{
+        constructor(name,empID){
+                super(name);
+                this.empID = empID;
+        }
+        // Overriding
+        sirname(lastName){
+                console.log("Hello from Employee class", this.name + " " + lastName + " " + this.empID);
+        }
+
+
+        address(address){
+        // Inheritance
+        super.state("Maharashtra");
+        console.log("Hello from Employee class", this.name + " " + address + " " + this.empID);
+        }
+}
+
+let emp = new Employee("Radha", 123);
+emp.sirname("Rani");
+emp.address("123 Main St");
+//console.log("Person:", typeof Person, Person.prototype);
+
+
+</script>
+</body>
+</html>
