@@ -61,7 +61,7 @@ let counter = {
     },
 
     hello: function(){
-        setTimeout(function(){
+        setTimeout(()=>{
             console.log('name in settitmeout', this.name)
         },1000)
     }
@@ -71,7 +71,7 @@ let btn = document.getElementById("clickme");
 let btn1 = document.getElementById("clickme1");
 
 let handler = counter.increment.bind(counter, "Gourav")
-btn.addEventListener("click", handler)
+btn.addEventListener("click", ()=>counter.increment())
 
 btn1.addEventListener("click", ()=>{counter.decrement()})
 
